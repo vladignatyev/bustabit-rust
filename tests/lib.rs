@@ -55,3 +55,23 @@ fn should_return_correct_outcome() {
         assert_eq!(h.outcome().unwrap(), o[i]);
     }
 }
+
+#[test]
+fn should_generate_correct_previous_games() {
+    let s = "b2acd37fbdb5509926ab5d7329704c840f8467266c90019682f3b260a029bdba";
+    let expectedHashes = vec![
+        "82886b71b3b26e4b162bbdf4e7024f50f6a7250c207fb9ce497ad56a3e7e700a",
+        "cb7da3ec6cb68d4c0fccd9640641cabcac641f12ff97e7314ec3e074ac0981e0",
+        "b459e199bac1342bf22d7aa6d19180aff35ab69f453d809949aab3e8d5e545aa"
+    ];
+
+    let mut initial = Game::new(&String::from(s)).unwrap();
+
+    let mut game1 = initial.next().unwrap();
+    let mut game2 = game1.next().unwrap();
+    let mut game3 = game2.next().unwrap();
+
+    assert_eq!(game1.hash, expectedHashes[0]);
+    assert_eq!(game2.hash, expectedHashes[1]);
+    assert_eq!(game3.hash, expectedHashes[2]);
+}
