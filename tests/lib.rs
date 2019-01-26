@@ -93,6 +93,27 @@ fn should_return_correct_outcome_for_nyans() {
 }
 
 #[test]
+fn should_work_in_for_loop() {
+    let s = "b2acd37fbdb5509926ab5d7329704c840f8467266c90019682f3b260a029bdba";
+    let mut initial = Game::new(&String::from(s)).unwrap();
+
+    let mut latest_game:Option<Game> = Option::None;
+
+    let mut counter = 0;
+
+    for game in initial.next() {
+        if latest_game != Option::None {
+            assert!(game.hash != latest_game.unwrap().hash);
+        }
+        latest_game = Some(game);
+        counter = counter + 1;
+        if (counter > 10) {
+            break;
+        }
+    }
+}
+
+#[test]
 fn should_output_game_object() {
     let game = Game::new(&String::from("5d07719b61b0abb6f1c3b17b1d69c838278f87f9b5e75077026e5fedf96c2eb2")).unwrap();
     println!("{}", game);

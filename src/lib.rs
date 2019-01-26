@@ -33,7 +33,6 @@ use std::i32;
 use std::fmt;
 
 
-#[derive(Debug)]
 pub struct Game {
     pub hash: String
 }
@@ -45,7 +44,7 @@ impl Game {
     /// ```
     /// let hash = String::from("5d07719b61b0abb6f1c3b17b1d69c838278f87f9b5e75077026e5fedf96c2eb2");
     /// let game = bustabit::Game::new(&hash).unwrap();
-    /// println!("{}", game.outcome()) // will print 2055.9
+    /// println!("{}", game.outcome()); // will print 2055.9
     /// ```
     pub fn new(s: &String) -> Option<Game> {
         if s.len() != 64 {
@@ -122,6 +121,11 @@ impl Iterator for Game {
 }
 
 impl fmt::Display for Game {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Game’s hash: {} Bust: {}", self.hash, self.outcome())
+    }
+}
+impl fmt::Debug for Game {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "Game’s hash: {} Bust: {}", self.hash, self.outcome())
     }
