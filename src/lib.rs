@@ -113,18 +113,26 @@ impl Iterator for Game {
 
     fn next(&mut self) -> Option<Self::Item> {
         let mut hasher = Sha256::new();
-        hasher.input(self.hash.clone());
+        hasher.input(&self.hash);
         let result = hasher.result();
 
-        Game::new(&format!("{:x}", result))
+        Game::new(&hex::encode(result))
     }
 }
+
+impl Clone for Game {
+    fn clone(&self) -> Game {
+        Game::new(&self.hash.clone()).unwrap()
+    }
+}
+
 
 impl fmt::Display for Game {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "Game’s hash: {} Bust: {}", self.hash, self.outcome())
     }
 }
+
 impl fmt::Debug for Game {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "Game’s hash: {} Bust: {}", self.hash, self.outcome())

@@ -93,23 +93,16 @@ fn should_return_correct_outcome_for_nyans() {
 }
 
 #[test]
-fn should_work_in_for_loop() {
-    let s = "b2acd37fbdb5509926ab5d7329704c840f8467266c90019682f3b260a029bdba";
-    let mut initial = Game::new(&String::from(s)).unwrap();
-
-    let mut latest_game:Option<Game> = Option::None;
-
+fn should_be_iterable_in_loop() {
+    let s = String::from("b2acd37fbdb5509926ab5d7329704c840f8467266c90019682f3b260a029bdba");
     let mut counter = 0;
 
-    for game in initial.next() {
-        if latest_game != Option::None {
-            assert!(game.hash != latest_game.unwrap().hash);
-        }
-        latest_game = Some(game);
+    let mut game:Game = Game::new(&s).unwrap();
+    loop {
+        println!("{:?}", game);
+        game = game.next().unwrap();
         counter = counter + 1;
-        if (counter > 10) {
-            break;
-        }
+        if counter > 10 { break; }
     }
 }
 
