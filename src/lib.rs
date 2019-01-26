@@ -1,6 +1,6 @@
 //! # Bustabit
 //!
-//! `bustabit` is a utility for verification of Bustabit games.
+//! `bustabit` is an utility library for verification of Bustabit games.
 //!
 //! Bustabit is a provably fair game of luck. “Provably fair” means that: 1) the outcome of every
 //! game round has not been changed after players placed a bet, and 2) this statement

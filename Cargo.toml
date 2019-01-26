@@ -8,6 +8,8 @@ license = "MIT"
 keywords = ["bustabit", "provably fair", "game", "gambling"]
 categories = ["games", "cryptography", "simulation"]
 
+homepage = "https://github.com/vladignatyev/bustabit-rust"
+
 [dependencies]
 sha2 = "0.8.0"
 hex = "0.3.1"
