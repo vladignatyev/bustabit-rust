@@ -5,10 +5,19 @@ authors = ["Vladimir Ignatev <ya.na.pochte@gmail.com>"]
 description = "The utility for verification of Bustabit games."
 license = "MIT"
 
-keywords = ["bustabit", "provably fair", "game", "gambling"]
+keywords = ["bustabit", "provably-fair", "game", "gambling"]
 categories = ["games", "cryptography", "simulation"]
 
 homepage = "https://github.com/vladignatyev/bustabit-rust"
+repository = "https://github.com/vladignatyev/bustabit-rust.git"
+readme = "README.md"
+
+[lib]
+name = "bustabit"
+path = "src/lib.rs"
+test = true
+doctest = true
+doc = true
 
 [dependencies]
 sha2 = "0.8.0"
