@@ -3,31 +3,17 @@ use bustabit::Game;
 
 #[cfg(test)]
 #[test]
-fn should_equal_to_provided() {
-    let test = String::from("1e09741e2d57ffdf7c8620b22585416adef89898ff1903eefd7e41460ed9e628");
-    let hs = Game::new(&test).unwrap();
-    assert_eq!(hs.hash, test);
-}
-
-#[test]
-fn should_return_none_short() {
+fn should_return_none_for_short_string() {
     let test = String::from("asd");
     let hs = Game::new(&test);
     assert_eq!(hs, Option::None);
 }
 
 #[test]
-fn should_return_none_invalid_symbols() {
+fn should_return_none_for_invalid_symbols() {
     let test = String::from("1g09741e2h57ffdf7c8620b22585416adef89898ff1903eefd7e41460ed9e628");
     let hs = Game::new(&test);
     assert_eq!(hs, Option::None);
-}
-
-#[test]
-fn should_equal_to_lowercased() {
-    let test = String::from("1E09741E2d57ffdf7c8620b22585416adef89898ff1903eefd7e41460ed9e628");
-    let hs = Game::new(&test).unwrap();
-    assert_eq!(hs.hash, test.to_lowercase());
 }
 
 #[test]
@@ -60,9 +46,9 @@ fn should_return_correct_outcome() {
 fn should_generate_correct_previous_games() {
     let s = "b2acd37fbdb5509926ab5d7329704c840f8467266c90019682f3b260a029bdba";
     let expected_hashes = vec![
-        "82886b71b3b26e4b162bbdf4e7024f50f6a7250c207fb9ce497ad56a3e7e700a",
-        "cb7da3ec6cb68d4c0fccd9640641cabcac641f12ff97e7314ec3e074ac0981e0",
-        "b459e199bac1342bf22d7aa6d19180aff35ab69f453d809949aab3e8d5e545aa"
+        hex::decode("82886b71b3b26e4b162bbdf4e7024f50f6a7250c207fb9ce497ad56a3e7e700a").unwrap(),
+        hex::decode("cb7da3ec6cb68d4c0fccd9640641cabcac641f12ff97e7314ec3e074ac0981e0").unwrap(),
+        hex::decode("b459e199bac1342bf22d7aa6d19180aff35ab69f453d809949aab3e8d5e545aa").unwrap()
     ];
 
     let mut initial = Game::new(&String::from(s)).unwrap();
@@ -110,4 +96,5 @@ fn should_be_iterable_in_loop() {
 fn should_output_game_object() {
     let game = Game::new(&String::from("5d07719b61b0abb6f1c3b17b1d69c838278f87f9b5e75077026e5fedf96c2eb2")).unwrap();
     println!("{}", game);
+    // assert!(false);
 }

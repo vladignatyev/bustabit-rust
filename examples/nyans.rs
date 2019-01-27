@@ -10,7 +10,7 @@ fn main() {
     let mut game:Game = Game::new(&s).unwrap();
     loop {
         if game.outcome() > 1000.0f64 {
-            println!("{:?}", game);
+            println!("{}", game);
             counter = counter + 1;
         }
 
