@@ -14,7 +14,7 @@ mod tests {
     #[bench]
     fn bench_game(b: &mut Bencher) {
         b.iter(|| {
-            let game = Game::new(&String::from("5d07719b61b0abb6f1c3b17b1d69c838278f87f9b5e75077026e5fedf96c2eb2")).unwrap();
+            Game::new(&String::from("5d07719b61b0abb6f1c3b17b1d69c838278f87f9b5e75077026e5fedf96c2eb2")).unwrap();
         });
     }
 
