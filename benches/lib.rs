@@ -14,7 +14,7 @@ mod tests {
     #[bench]
     fn bench_game(b: &mut Bencher) {
         b.iter(|| {
-            Game::new(&String::from("5d07719b61b0abb6f1c3b17b1d69c838278f87f9b5e75077026e5fedf96c2eb2")).unwrap();
+            Game::new(&String::from("5d07719b61b0abb6f1c3b17b1d69c838278f87f9b5e75077026e5fedf96c2eb2"))
         });
     }
 
@@ -22,7 +22,25 @@ mod tests {
     fn bench_outcome(b: &mut Bencher) {
         let game = Game::new(&String::from("5d07719b61b0abb6f1c3b17b1d69c838278f87f9b5e75077026e5fedf96c2eb2")).unwrap();
         b.iter(|| {
-            game.outcome();
+            game.outcome()
+        });
+    }
+
+    #[bench]
+    fn bench_iterator(b: &mut Bencher) {
+        let mut game = Game::new(&String::from("5d07719b61b0abb6f1c3b17b1d69c838278f87f9b5e75077026e5fedf96c2eb2")).unwrap();
+
+        b.iter(|| {
+            game = game.next().unwrap()
+        });
+    }
+
+    #[bench]
+    fn bench_clone(b: &mut Bencher) {
+        let game = Game::new(&String::from("5d07719b61b0abb6f1c3b17b1d69c838278f87f9b5e75077026e5fedf96c2eb2")).unwrap();
+
+        b.iter(|| {
+            let _g = game.clone();
         });
     }
 }

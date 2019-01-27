@@ -123,10 +123,12 @@ impl Iterator for Game {
 
     fn next(&mut self) -> Option<Self::Item> {
         let mut hasher = Sha256::new();
-        hasher.input(&hex::encode(&self.hash));
-        let result = hasher.result();
+        hasher.input(&hex::encode(&self.hash)); // we need to convert the hash into string first
+        let result = hasher.result().to_vec();
 
-        Game::new(&hex::encode(result))
+        Some(Game {
+            hash: result
+        })
     }
 }
 
