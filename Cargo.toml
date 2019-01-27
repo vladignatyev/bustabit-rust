@@ -10,6 +10,7 @@ categories = ["games", "cryptography", "simulation"]
 
 homepage = "https://github.com/vladignatyev/bustabit-rust"
 repository = "https://github.com/vladignatyev/bustabit-rust.git"
+documentation = "https://docs.rs/bustabit/0.2.0/bustabit/"
 readme = "README.md"
 
 [lib]
