@@ -19,11 +19,12 @@ fn should_return_none_for_invalid_symbols() {
 #[test]
 fn should_have_next_item() {
     let s = String::from("b2acd37fbdb5509926ab5d7329704c840f8467266c90019682f3b260a029bdba");
-    let mut hs = Game::new(&s).unwrap();
+    let hs = Game::new(&s).unwrap();
 
     let s2 = String::from("82886b71b3b26e4b162bbdf4e7024f50f6a7250c207fb9ce497ad56a3e7e700a");
     let expected = Game::new(&s2).unwrap();
-    let n = hs.next().unwrap();
+    let mut iter = hs.into_iter();
+    let n = iter.next().unwrap();
     assert_eq!(expected, n);
 }
 
@@ -51,11 +52,12 @@ fn should_generate_correct_previous_games() {
         hex::decode("b459e199bac1342bf22d7aa6d19180aff35ab69f453d809949aab3e8d5e545aa").unwrap()
     ];
 
-    let mut initial = Game::new(&String::from(s)).unwrap();
+    let initial = Game::new(&String::from(s)).unwrap();
+    let mut iter = initial.into_iter();
 
-    let mut game1 = initial.next().unwrap();
-    let mut game2 = game1.next().unwrap();
-    let game3 = game2.next().unwrap();
+    let game1 = iter.next().unwrap();
+    let game2 = iter.next().unwrap();
+    let game3 = iter.next().unwrap();
 
     assert_eq!(game1.hash, expected_hashes[0]);
     assert_eq!(game2.hash, expected_hashes[1]);
@@ -81,14 +83,10 @@ fn should_return_correct_outcome_for_nyans() {
 #[test]
 fn should_be_iterable_in_loop() {
     let s = String::from("b2acd37fbdb5509926ab5d7329704c840f8467266c90019682f3b260a029bdba");
-    let mut counter = 0;
 
-    let mut game:Game = Game::new(&s).unwrap();
-    loop {
-        println!("{:?}", game);
-        game = game.next().unwrap();
-        counter = counter + 1;
-        if counter > 10 { break; }
+    let game:Game = Game::new(&s).unwrap();
+    for game in game.into_iter().take(10) {
+        println!("{}", game);
     }
 }
 

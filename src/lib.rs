@@ -95,11 +95,11 @@ impl Game {
 
         // calculate outcome of the game
         let x1 = r as f64 * POW2;
-        let x = 99.0f64 / (1.0f64 - x1);
-        let result:f64 = x.floor() * 0.01f64;
+        let x:f64 = 99.0 / (1.0 - x1);
+        let result:f64 = x.floor() / 100.0;
 
         // truncate and return calculated value
-        result.max(1.0f64)
+        result.max(1.0)
     }
 }
 
@@ -115,22 +115,45 @@ impl PartialEq for Game {
 /// ```
 /// # let hash = String::from("b2acd37fbdb5509926ab5d7329704c840f8467266c90019682f3b260a029bdba");
 /// let mut latest_game = bustabit::Game::new(&hash).unwrap();
-/// let mut previous_game = latest_game.next().unwrap();
-/// let one_before_previous = previous_game.next().unwrap();
+/// let mut iter = latest_game.into_iter();
+/// let mut previous_game = iter.next().unwrap();
+/// let one_before_previous = iter.next().unwrap();
 /// ```
-impl Iterator for Game {
+impl IntoIterator for Game {
     type Item = Game;
+    type IntoIter = GameIntoIterator;
 
-    fn next(&mut self) -> Option<Self::Item> {
-        let mut hasher = Sha256::new();
-        hasher.input(&hex::encode(&self.hash)); // we need to convert the hash into string first
-        let result = hasher.result().to_vec();
-
-        Some(Game {
-            hash: result
-        })
+    fn into_iter(self) -> Self::IntoIter {
+        GameIntoIterator {
+            hash: self.hash.clone(),
+            game: self,
+            index: 0,
+        }
     }
 }
+
+pub struct GameIntoIterator {
+    game: Game,
+    hash: Vec<u8>,
+    index: usize
+}
+
+impl Iterator for GameIntoIterator {
+    type Item = Game;
+
+    fn next(&mut self) -> Option<Game> {
+        let mut hasher = Sha256::new();
+        hasher.input(&hex::encode(self.hash.clone())); // we need to convert the hash into string first
+        let result = hasher.result().to_vec();
+        self.hash = result.clone();
+        self.index = self.index + 1;
+        self.game = Game {
+            hash: result
+        };
+        Some(self.game.clone())
+    }
+}
+
 
 impl Clone for Game {
     fn clone(&self) -> Game {
