@@ -1,6 +1,6 @@
 [package]
 name = "bustabit"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Vladimir Ignatev <ya.na.pochte@gmail.com>"]
 description = "The utility for verification of Bustabit games."
 license = "MIT"
